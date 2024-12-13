@@ -19,9 +19,9 @@ const App = () => {
 
   return (
     <div>
-      <Header course= {course}/>
+      <Header course={course}/>
       <Content course={course}/>
-      <Total course= {course}/>
+      <Total course={course}/>
     </div>
   )
 }
@@ -49,9 +49,9 @@ const Part = (props) => {
 }
 
 const Total = (props) => {
-  let exertotal
+  let exertotal = 0
   for (let i = 0; i < props.course.parts.length; i++) {
-    exertotal =+ props.course.parts[i].exercises
+    exertotal += props.course.parts[i].exercises
   }
   return (
   <p>Number of exercises: {exertotal}</p>
