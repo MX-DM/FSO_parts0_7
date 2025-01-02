@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -21,32 +21,71 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    const isRepeated = persons.some(person => 
+    const repeatedPerson = persons.find(person => 
       person.name.toLowerCase() == (newName.toLowerCase()))
     
-    if (isRepeated){
-      alert(`The name "${newName}" already exists in the phonebook.`)
+    const newPerson = {name: newName, number: newNumber}
+
+    if (repeatedPerson){
+      console.log('Repeated: ', repeatedPerson)
+
+      if (window.confirm(`The name "${newName}" already exists in the phonebook. Update the old number with a new one?`)){
+        personService
+        .update(repeatedPerson.id, newPerson)
+        .then(response => {
+          console.log('Updated: ', response)
+          setPersons(persons.map(p => p.id === repeatedPerson.id ? response : p))
+          setNewName('')
+          setNewNumber('')
+        })
+        .catch(error => {
+          console.error('Error updating person:', error);
+        })
+      }
     }
+
     else{
-      const newPerson = {name: newName, number: newNumber}
-      const newPersons = persons.concat(newPerson)
-      setPersons(newPersons)
-      setNewName('')
-      setNewNumber('')
+      
+      personService
+      .create(newPerson)
+      .then(returnedPerson => {
+        console.log('Added: ', returnedPerson)
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
+      .catch(error => {
+        console.error('Error adding person:', error);
+      })
     }
-    
+  
+  }
+
+  const deleteHandler = (id) => {
+    const personToDelete = persons.find(p => p.id === id)
+
+    if (window.confirm(`Delete '${personToDelete.name}'?`)){
+      personService
+      .remove(id)
+      .then(() => {
+        console.log('Deleted: ', personToDelete)
+        setPersons(persons.filter(p => p.id !== id))
+      })
+      .catch(error => {
+        console.log('Error:', error)
+        alert(`Failed to delete '${personToDelete.name}'. Please try again.`)
+      })
+    }
   }
 
   useEffect((() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    personService
+    .getAll()
+    .then(initialPersons => {
+      setPersons(initialPersons)
+    })
   }), [])
-  console.log('Rendered', persons)
+
 
   return (
     <div>
@@ -61,7 +100,7 @@ const App = () => {
         newNumber={newNumber}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={newFilter}/>
+      <Persons persons={persons} filter={newFilter} clickHandler={deleteHandler}/>
       
     </div>
   )
@@ -85,20 +124,32 @@ const PersonForm = ({changeNumberHandler, changeNameHandler, addPerson, newName,
   )
 }
 
-const Persons = ({persons, filter}) => {
+const Persons = ({persons, filter, clickHandler}) => {
   const filteredPersons = persons.filter(person =>
     person.name.toLowerCase().includes(filter.toLowerCase())
   )
   return (
     <ul>
-    {filteredPersons.map((p,i) => <PersonLine key={i} name={p.name} number={p.number}/>)}
+    {filteredPersons.map((p,i) => <PersonLine key={i} id={p.id} name={p.name} number={p.number} clickHandler={clickHandler}/>)}
     </ul>
   )
 }
 
-const PersonLine = ({name, number}) =>{
+const Button = ({text, clickHandler}) => {
+  return (
+    <button onClick={clickHandler}>
+      {text}
+    </button>
+  )
+}
+
+const PersonLine = ({id, name, number, clickHandler}) =>{
   return(
-    <li>{name} {number}</li>
+    <li>
+      {name} {number} {}
+      <Button text={"delete"} clickHandler={() => clickHandler(id)}/>
+    </li>
+    
   )
 }
 
