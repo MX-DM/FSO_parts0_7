@@ -6,6 +6,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [message, setSuccessMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const changeNameHandler = (event) => {
     setNewName(event.target.value)
@@ -37,9 +39,16 @@ const App = () => {
           setPersons(persons.map(p => p.id === repeatedPerson.id ? response : p))
           setNewName('')
           setNewNumber('')
+          setSuccessMessage(`Modified ${repeatedPerson.name}'s number successfully`)
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
         })
         .catch(error => {
-          console.error('Error updating person:', error);
+          setErrorMessage(`Data of ${repeatedPerson.name} has already been removed.`)
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
         })
       }
     }
@@ -53,6 +62,10 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+        setSuccessMessage(`Added ${returnedPerson.name} successfully`)
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
       })
       .catch(error => {
         console.error('Error adding person:', error);
@@ -70,6 +83,10 @@ const App = () => {
       .then(() => {
         console.log('Deleted: ', personToDelete)
         setPersons(persons.filter(p => p.id !== id))
+        setSuccessMessage(`Deleted ${personToDelete.name} successfully`)
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
       })
       .catch(error => {
         console.log('Error:', error)
@@ -90,6 +107,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <MessageSuccess message={message}/>
+      <MessageError errorMessage={errorMessage}/>
       <Filter newFilter={newFilter} changeFilterHandler={changeFilterHandler}/>
       <h2>Add new person</h2>
       <PersonForm 
@@ -145,12 +164,38 @@ const Button = ({text, clickHandler}) => {
 
 const PersonLine = ({id, name, number, clickHandler}) =>{
   return(
-    <li>
+    <li className="personLine">
       {name} {number} {}
       <Button text={"delete"} clickHandler={() => clickHandler(id)}/>
     </li>
     
   )
+}
+
+const MessageSuccess = ({message}) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className="messageSuccess">
+      {message}
+    </div>
+  )
+
+}
+
+const MessageError = ({errorMessage}) => {
+  if (errorMessage === null) {
+    return null
+  }
+
+  return (
+    <div className="messageError">
+      {errorMessage}
+    </div>
+  )
+
 }
 
 export default App

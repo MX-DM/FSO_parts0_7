@@ -1,0 +1,27 @@
+.personLine {
+    color: black;
+    padding-top: 3px;
+    font-size: 15px;
+  }
+
+.messageSuccess {
+  color: green;
+  border: 3px;
+  border-radius: 0.8em;
+  font-size: 25px;
+  background-color: rgba(64, 218, 64, 0.5);
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.messageError {
+  color: red;
+  border: 3px;
+  border-radius: 0.8em;
+  font-size: 25px;
+  background-color: rgba(182, 39, 39, 0.5);
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
