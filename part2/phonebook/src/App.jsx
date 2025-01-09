@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
 const App = () => {
-  const [persons, setPersons] = useState([]) 
+  const [persons, setPersons] = useState(null) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
@@ -103,6 +103,9 @@ const App = () => {
     })
   }), [])
 
+  if (!persons) {
+    return null
+  }
 
   return (
     <div>
