@@ -1,0 +1,3 @@
+[submodule "part3/phonebook_backend"]
+	path = part3/phonebook_backend
+	url = https://github.com/MX-DM/phonebook_backend
