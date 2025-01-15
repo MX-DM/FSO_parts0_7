@@ -24,7 +24,7 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     const repeatedPerson = persons.find(person => 
-      person.name.toLowerCase() == (newName.toLowerCase()))
+      person.name && person.name.toLowerCase() === newName.toLowerCase())
     
     const newPerson = {name: newName, number: newNumber}
 
