@@ -130,7 +130,7 @@ const App = () => {
 
 const Filter = ({newFilter, changeFilterHandler}) => {
   return (
-    <div>Filter names that contain: 
+    <div>Filter names that contain:
       <input value={newFilter} onChange={changeFilterHandler}/>
     </div>
   )
@@ -139,8 +139,8 @@ const Filter = ({newFilter, changeFilterHandler}) => {
 const PersonForm = ({changeNumberHandler, changeNameHandler, addPerson, newName, newNumber}) => {
   return (
     <form onSubmit={addPerson}>
-        <div>name: <input value={newName} onChange={changeNameHandler}/></div>
-        <div>number: <input value={newNumber} onChange={changeNumberHandler}/></div>
+        <div>Name: <input value={newName} onChange={changeNameHandler}/></div>
+        <div>Number: <input value={newNumber} onChange={changeNumberHandler}/></div>
         <div><button type="submit">add</button></div>
       </form>
   )

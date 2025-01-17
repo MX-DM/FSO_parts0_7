@@ -2,17 +2,18 @@
     color: rgb(115, 115, 115);
     padding-top: 3px;
     font-size: 15px;
+    font-family: system-ui;
   }
 
 .messageSuccess {
   color: green;
   border: 3px;
-  border-radius: 0.8em;
   font-size: 25px;
   background-color: rgba(64, 218, 64, 0.5);
   padding: 0.5em;
   margin-top: 1em;
   margin-bottom: 1em;
+  font-family: system-ui;
 }
 
 .messageError {
@@ -20,8 +21,14 @@
   border: 3px;
   border-radius: 0.8em;
   font-size: 25px;
-  background-color: rgba(182, 39, 39, 0.5);
+  background-color: rgba(207, 23, 23, 0.5);
   padding: 0.5em;
   margin-top: 1em;
   margin-bottom: 1em;
+  font-family: system-ui;
+}
+
+h2 {
+  color: rgb(21, 129, 236);
+  font-family: system-ui;
 }
