@@ -45,9 +45,9 @@ const App = () => {
           }, 5000)
         })
         .catch(error => {
-          setErrorMessage(`Data of ${repeatedPerson.name} has already been removed.`)
+          setErrorMessage(`${error.response.data.error}`)
           setTimeout(() => {
-            setSuccessMessage(null)
+            setErrorMessage(null)
           }, 5000)
         })
       }
@@ -68,7 +68,10 @@ const App = () => {
         }, 5000)
       })
       .catch(error => {
-        console.error('Error adding person:', error);
+        setErrorMessage(`${error.response.data.error}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
       })
     }
   
