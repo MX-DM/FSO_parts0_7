@@ -55,7 +55,10 @@ blogsRouter.delete('/:id', async (req, res) => {
 blogsRouter.put('/:id', async (req, res, next) => {
     const id = req.params.id
     const body = req.body
-
+    const decodedToken = jwt.verify(req.token, process.env.SECRET)
+    if (!decodedToken.id) {
+        return res.status(401).json({ error: 'token invalid' })
+    }
     const blog = {
         title: body.title,
         author: body.author,
