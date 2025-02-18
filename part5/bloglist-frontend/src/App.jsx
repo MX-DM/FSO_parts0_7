@@ -8,13 +8,21 @@ import Button from './components/Button'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { jwtDecode } from 'jwt-decode'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [message, setSuccessMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  var currentUser
 
+  if (user === null) {
+    currentUser = 0
+  }
+  else{
+    currentUser = user.id
+  }
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -36,6 +44,8 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBlogAppUser', JSON.stringify(user)
       )
+      const decodedToken = jwtDecode(user.token)
+      user.id = decodedToken.id
       blogService.setToken(user.token)
       setUser(user)
     }
@@ -46,6 +56,7 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
+
   }
 
   const addBlog = async (newBlog) => {
@@ -93,7 +104,7 @@ const App = () => {
       }
     } catch (error) {
       console.log(error)
-      setErrorMessage('Error deleting the blog')
+      setErrorMessage('Unauthorized deletion')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -138,6 +149,7 @@ const App = () => {
         setBlogs={setBlogs}
         deleteBlog={deleteBlog}
         updateLikes={updateLikes}
+        currentUser={currentUser}
       />
     </>
   )

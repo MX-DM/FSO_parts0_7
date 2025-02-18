@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import Button from './Button'
 
-const Blog = ({ blog, updateLikes, deleteBlog }) => {
+const Blog = ({ blog, updateLikes, deleteBlog, currentUser }) => {
   const [details, setDetails] = useState(false)
   const toggleDetails = () => setDetails(!details)
 
@@ -21,25 +20,30 @@ const Blog = ({ blog, updateLikes, deleteBlog }) => {
     fontSize: 16,
     margin: 3
   }
-
   return (
     <div className='blog' style={blogStyle}>
       <div style={hideWhenVisible} className='blog-summary'>
         <p style={pStyle}>{blog.title} {blog.author}
-          <Button text='View' clickHandler={toggleDetails}/>
+          <button onClick={toggleDetails}>View</button>
         </p>
       </div>
       <div style={showWhenVisible} className='blog-details'>
         <p style={pStyle}>{blog.title} {blog.author}
-          <Button text='Hide' clickHandler={toggleDetails}/>
+          <button onClick={toggleDetails}>Hide</button>
         </p>
         <p style={pStyle} data-testid='blog-url'>{blog.url}</p>
-        <p style={pStyle} data-testid='blog-likes' >Likes: {blog.likes}
-          <Button text={'Like'} clickHandler={updateLikes}/>
-        </p>
-        <p style={pStyle}>{blog.user.name}
-        </p>
-        <Button text={'Delete'} clickHandler={deleteBlog}/>
+        {currentUser !== 0 ? (
+          <p style={pStyle} data-testid='blog-likes' >Likes: {blog.likes}
+            <button id='like-button' onClick={updateLikes}>Like</button>
+          </p>
+        ) : (
+          <p style={pStyle} data-testid='blog-likes' >Likes: {blog.likes} </p>
+        )}
+        {currentUser === blog.user ? (
+          <button id='delete-button' onClick={deleteBlog}>Delete</button>
+        ):(
+          <></>
+        )}
       </div>
     </div>
   )

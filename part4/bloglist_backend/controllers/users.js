@@ -7,6 +7,12 @@ usersRouter.get('/', async (req, res, next) => {
     res.status(200).json(users)
 })
 
+usersRouter.get('/:id', async (req, res, next) => {
+    const id = req.params.id
+    const user = await User.findById(id)
+    res.status(200).json(user)
+})
+
 usersRouter.post('/', async (req, res, next) => {
     const { username, name, password } = req.body
 

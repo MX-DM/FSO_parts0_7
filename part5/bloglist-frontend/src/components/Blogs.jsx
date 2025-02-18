@@ -1,11 +1,11 @@
 import Blog from './Blog'
 import blogService from '../services/blogs'
 
-const Blogs = ({ blogs, setBlogs, updateLikes, deleteBlog }) => {
+const Blogs = ({ blogs, currentUser, updateLikes, deleteBlog }) => {
   return (
     <div>
       <h2>Blogs</h2>
-      {blogs.map(b => <Blog key={b.id} blog={b} updateLikes={() => updateLikes(b)} deleteBlog={() => deleteBlog(b)} />)}
+      {blogs.map(b => <Blog key={b.id} blog={{ ...b, user: b.user.id || b.user }} updateLikes={() => updateLikes(b)} deleteBlog={() => deleteBlog(b)} currentUser={currentUser} />)}
     </div>
   )
 }
