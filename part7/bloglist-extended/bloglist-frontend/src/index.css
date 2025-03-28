@@ -1,0 +1,21 @@
+.messageSuccess {
+  color: green;
+  border: 3px;
+  font-size: 25px;
+  background-color: rgba(64, 218, 64, 0.5);
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-family: system-ui;
+}
+
+.messageError {
+  color: red;
+  border: 3px;
+  font-size: 25px;
+  background-color: rgba(207, 23, 23, 0.5);
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-family: system-ui;
+}
