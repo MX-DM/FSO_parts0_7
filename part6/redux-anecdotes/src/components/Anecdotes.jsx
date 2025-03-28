@@ -24,13 +24,13 @@ const Anecdotes = () => {
         <div className='anecdotes'>
             {[...anecdotes].sort((a, b) => b.votes - a.votes).map(anecdote =>
                 <div key={anecdote.id}>
-                <div>
-                    {anecdote.content}
-                </div>
-                <div>
-                    has {anecdote.votes}
-                    <button onClick={() => voteHandler(anecdote.id)}>vote</button>
-                </div>
+                    <div>
+                        {anecdote.content}
+                    </div>
+                    <div>
+                        has {anecdote.votes}
+                        <button onClick={() => voteHandler(anecdote.id)}>vote</button>
+                    </div>
                 </div>
             )}
         </div>
