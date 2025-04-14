@@ -9,6 +9,13 @@ blogsRouter.get('/', async (req, res) => {
     res.json(blogs)
 })
 
+blogsRouter.get('/:id', async (req, res) => {
+    const id = req.params.id
+    const blog = await Blog.findById(id)
+    if (!blog) return res.status(404).json({ error: 'Blog not found' })
+    res.json(blog)
+})
+
 blogsRouter.post('/', async (req, res, next) => {
     const body = req.body
     const decodedToken = jwt.verify(req.token, process.env.SECRET)

@@ -16,7 +16,6 @@ const Login = ({ onLogin }) => {
     }
     return (
         <div>
-            <h2>Log in to application</h2>
             <form onSubmit={onSubmit}>
                 <div> Username:
                     <input

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
@@ -6,15 +6,23 @@ import Login from './components/Login'
 import Notification from './components/Notification'
 import Button from './components/Button'
 import Togglable from './components/Togglable'
+import Users from './components/Users'
+import User from './components/User'
+import BlogView from './components/BlogView'
+import NavBar from './components/NavBar'
 import blogService from './services/blogs'
 import { notify } from './reducers/notificationReducer'
+import usersService from './services/users'
 import { createBlog, inializeBlogs, setBlogs, deleteBlog, updateBlog } from './reducers/blogReducer'
 import { setUser, loginUser } from './reducers/userReducer'
+import { Routes, Route, useMatch } from 'react-router-dom'
+
 
 const App = () => {
     const dispatch = useDispatch()
     const blogs = useSelector(state => state.blogs)
     const user = useSelector(state => state.user)
+    const [users, setUsers] = useState([])
 
     var currentUser
 
@@ -37,6 +45,15 @@ const App = () => {
             blogService.setToken(user.token)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        const getUsers = async () => {
+            const data = await usersService.getAll()
+            setUsers(data)
+        }
+
+        getUsers()
     }, [])
 
     const handleLogin = async (userCredentials) => {
@@ -92,38 +109,53 @@ const App = () => {
 
     const blogFormRef = useRef()
 
+    const blogMatch = useMatch('/blogs/:id')
+    const blogView = blogMatch
+        ? blogs.find(b => b.id === blogMatch.params.id)
+        : null
+
+    const userMatch = useMatch('/users/:id')
+    const userView = userMatch
+        ? users.find(u => u.id === userMatch.params.id)
+        : null
+
     return (
-        <>
+        <div className='container'>
+            <NavBar user={user} handleLogin={handleLogin} logOut={logOut}/>
             <h1>Blog App</h1>
             <Notification/>
-            {user !== null
-                ? (
+            <Routes>
+                <Route path="/" element={
                     <>
-                        <p>{user.name} logged-in
-                            <Button text={'Log out'} clickHandler={logOut}/>
-                        </p>
-                        <Togglable buttonLabel='Create new blog' ref={blogFormRef}>
-                            <BlogForm
-                                createBlog={addBlog}
-                            />
-                        </Togglable>
+                        <div>Home page</div>
                     </>
-                ) : (
+                }/>
+                <Route path="/users" element={<Users users={users}/>}/>
+                <Route path="/users/:id" element={<User user={userView}/>}/>
+                <Route path="/blogs/:id" element={<BlogView blog={blogView} updateLikes={updateLikes}/>}/>
+                <Route path="/blogs" element={
                     <>
-                        <Togglable buttonLabel='Log in'>
-                            <Login
-                                onLogin={handleLogin}
-                            />
-                        </Togglable>
+                        {user !== null
+                            ? (
+                                <Togglable buttonLabel='Create new blog' ref={blogFormRef}>
+                                    <BlogForm
+                                        createBlog={addBlog}
+                                    />
+                                </Togglable>
+
+                            ) : (
+                                <h3 style={{ margin: '20px' }}>Must be logged-in to create new blogs!</h3>
+                            )}
+                        <Blogs
+                            blogs={[...blogs].sort((a, b) => b.likes - a.likes)}
+                            deleteBlog={handleDeleteBlog}
+                            updateLikes={updateLikes}
+                            currentUser={currentUser}
+                        />
                     </>
-                )}
-            <Blogs
-                blogs={[...blogs].sort((a, b) => b.likes - a.likes)}
-                deleteBlog={handleDeleteBlog}
-                updateLikes={updateLikes}
-                currentUser={currentUser}
-            />
-        </>
+                }/>
+            </Routes>
+        </div>
     )
 }
 
