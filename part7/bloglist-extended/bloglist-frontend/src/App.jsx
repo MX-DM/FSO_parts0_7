@@ -2,9 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
-import Login from './components/Login'
 import Notification from './components/Notification'
-import Button from './components/Button'
 import Togglable from './components/Togglable'
 import Users from './components/Users'
 import User from './components/User'
@@ -13,9 +11,10 @@ import NavBar from './components/NavBar'
 import blogService from './services/blogs'
 import { notify } from './reducers/notificationReducer'
 import usersService from './services/users'
-import { createBlog, inializeBlogs, setBlogs, deleteBlog, updateBlog } from './reducers/blogReducer'
+import { createBlog, inializeBlogs, deleteBlog, updateBlog } from './reducers/blogReducer'
 import { setUser, loginUser } from './reducers/userReducer'
 import { Routes, Route, useMatch } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 
 
 const App = () => {
@@ -120,7 +119,7 @@ const App = () => {
         : null
 
     return (
-        <div className='container'>
+        <Container fluid>
             <NavBar user={user} handleLogin={handleLogin} logOut={logOut}/>
             <h1>Blog App</h1>
             <Notification/>
@@ -155,7 +154,7 @@ const App = () => {
                     </>
                 }/>
             </Routes>
-        </div>
+        </Container>
     )
 }
 

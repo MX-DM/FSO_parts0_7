@@ -19,3 +19,30 @@
   margin-bottom: 1em;
   font-family: system-ui;
 }
+
+.dropdown-menu {
+  background: transparent !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: none;
+}
+
+.custom-login-dropdown {
+  min-width: 300px;
+  background-color: #171720;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.custom-navbar {
+  background-color: #1f1f2b;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+
