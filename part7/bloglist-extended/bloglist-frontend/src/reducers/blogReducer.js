@@ -47,4 +47,13 @@ export const updateBlog = (blogToUpdate) => {
     }
 }
 
+export const commentBlog = (blogId, comment) => {
+    return async dispatch => {
+        await blogService.updateComment(blogId, { comment })
+        const blogs = await blogService.getAll()
+        dispatch(setBlogs(blogs))
+    }
+}
+
+
 export default blogSlice.reducer

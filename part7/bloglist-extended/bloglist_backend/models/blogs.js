@@ -8,8 +8,9 @@ const blogSchema = new mongoose.Schema({
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-    }
-  })
+    },
+    comments: { type: [String], default: [] }
+})
   
 const Blog = mongoose.model('Blog', blogSchema)
 

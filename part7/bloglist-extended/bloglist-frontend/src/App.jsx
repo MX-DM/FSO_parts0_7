@@ -8,10 +8,11 @@ import Users from './components/Users'
 import User from './components/User'
 import BlogView from './components/BlogView'
 import NavBar from './components/NavBar'
+import HomePage from './components/HomePage'
 import blogService from './services/blogs'
 import { notify } from './reducers/notificationReducer'
 import usersService from './services/users'
-import { createBlog, inializeBlogs, deleteBlog, updateBlog } from './reducers/blogReducer'
+import { createBlog, inializeBlogs, deleteBlog, updateBlog, commentBlog } from './reducers/blogReducer'
 import { setUser, loginUser } from './reducers/userReducer'
 import { Routes, Route, useMatch } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
@@ -89,6 +90,15 @@ const App = () => {
         }
     }
 
+    const updateComments = async (blog, comment) => {
+        try {
+            dispatch(commentBlog(blog, comment))
+        } catch(error) {
+            console.log(error)
+            dispatch(notify('Error adding comment', 'e', 5))
+        }
+    }
+
     const handleDeleteBlog = async (blog) => {
         try {
             if (window.confirm('Are you sure you want to delete this item?')) {
@@ -126,12 +136,12 @@ const App = () => {
             <Routes>
                 <Route path="/" element={
                     <>
-                        <div>Home page</div>
+                        <HomePage blogs={blogs} />
                     </>
                 }/>
                 <Route path="/users" element={<Users users={users}/>}/>
                 <Route path="/users/:id" element={<User user={userView}/>}/>
-                <Route path="/blogs/:id" element={<BlogView blog={blogView} updateLikes={updateLikes}/>}/>
+                <Route path="/blogs/:id" element={<BlogView blog={blogView} updateLikes={updateLikes} updateComments={updateComments}/>}/>
                 <Route path="/blogs" element={
                     <>
                         {user !== null

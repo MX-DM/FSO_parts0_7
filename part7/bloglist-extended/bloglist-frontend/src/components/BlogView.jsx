@@ -1,4 +1,6 @@
-const BlogView = ({ blog, updateLikes }) => {
+import CommentSection from './CommentSection'
+
+const BlogView = ({ blog, updateLikes, updateComments }) => {
     if (!blog) return <p>Loading Blog...</p>
     return(
         <div>
@@ -11,7 +13,9 @@ const BlogView = ({ blog, updateLikes }) => {
                 <a href={blog.url}>{blog.url}</a>
             </p>
             <p>Added by: {blog.user.name}</p>
+            <CommentSection blog={blog} updateComments={updateComments}/>
         </div>
+
     )
 }
 
