@@ -1,54 +1,21 @@
-import { Table, Button, Collapse } from 'react-bootstrap'
-import React, { useState } from 'react'
+import { Container, Row, Col, Button } from 'react-bootstrap'
+import '../index.css'
+import { useNavigate } from 'react-router-dom'
 
-const HomePage = ({ blogs }) => {
-    const [openRow, setOpenRow] = useState(null)
-
-    const toggleRow = (id) => {
-        setOpenRow(openRow === id ? null : id)
-    }
-
+const HomePage = () => {
+    const Navigate = useNavigate()
     return (
-        <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {blogs.map((blog) => (
-                    <React.Fragment key={blog.id}>
-                        <tr>
-                            <td>{blog.title}</td>
-                            <td>{blog.author}</td>
-                            <td>
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    onClick={() => toggleRow(blog.id)}
-                                >
-                                    {openRow === blog.id ? 'Hide' : 'Details'}
-                                </Button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colSpan="3" className="p-0 border-0">
-                                <Collapse in={openRow === blog.id}>
-                                    <div className="p-3 bg-light border-top">
-                                        <strong>URL:</strong> {blog.url}<br />
-                                        <strong>Likes:</strong> {blog.likes}
-                                        {/* Add more info/buttons here */}
-                                    </div>
-                                </Collapse>
-                            </td>
-                        </tr>
-                    </React.Fragment>
-                ))}
-            </tbody>
-        </Table>
+        <div className="homepage-wrapper text-white">
+            <Container fluid className="homepage-container d-flex align-items-center">
+                <Row className="w-100">
+                    <Col md={6} className="d-flex flex-column justify-content-center align-items-start p-5">
+                        <h1 className="display-1 fw-bold">Blapp</h1>
+                        <p className="fs-4">Create and check out blogs in one go!</p>
+                        <Button variant="outline-light" size="lg" onClick={() => Navigate('/blogs')}>Start Creating!</Button>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
     )
 }
 

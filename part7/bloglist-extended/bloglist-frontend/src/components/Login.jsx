@@ -1,43 +1,41 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
+
 const Login = ({ onLogin }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const onSubmit = (event) => {
         event.preventDefault()
-        onLogin({
-            username: username,
-            password: password
-        })
-
+        onLogin({ username, password })
         setUsername('')
         setPassword('')
     }
+
     return (
-        <Form onSubmit={onSubmit}>
-            <Form.Group>
-                <Form.Label>Username:</Form.Label>
+        <Form onSubmit={onSubmit} className="dropdown-login-form p-3">
+            <Form.Group className="mb-2">
+                <Form.Label className="text-white-80 small mb-1">Username</Form.Label>
                 <Form.Control
                     type="text"
                     value={username}
-                    name="Username"
-                    id='username'
                     onChange={({ target }) => setUsername(target.value)}
+                    className="text-white border-0"
+                    placeholder="Enter username"
                 />
             </Form.Group>
-            <Form.Group>
-                <Form.Label>Password:</Form.Label>
+            <Form.Group className="mb-2">
+                <Form.Label className="text-white-80 small mb-1">Password</Form.Label>
                 <Form.Control
-                    type="text"
+                    type="password"
                     value={password}
-                    name="Password"
-                    id='password'
                     onChange={({ target }) => setPassword(target.value)}
+                    className="text-white border-0"
+                    placeholder="Enter password"
                 />
             </Form.Group>
-            <Button variant="primary" type="submit" className='mt-2'>
-                 Login
+            <Button type="submit" variant="primary" size="sm" className="w-100 mt-2">
+                Login
             </Button>
         </Form>
     )

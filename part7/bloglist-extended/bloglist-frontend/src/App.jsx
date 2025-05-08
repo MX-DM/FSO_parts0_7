@@ -131,12 +131,11 @@ const App = () => {
     return (
         <Container fluid>
             <NavBar user={user} handleLogin={handleLogin} logOut={logOut}/>
-            <h1>Blog App</h1>
             <Notification/>
             <Routes>
                 <Route path="/" element={
                     <>
-                        <HomePage blogs={blogs} />
+                        <HomePage />
                     </>
                 }/>
                 <Route path="/users" element={<Users users={users}/>}/>
