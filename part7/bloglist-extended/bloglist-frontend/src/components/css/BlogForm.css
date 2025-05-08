@@ -1,0 +1,87 @@
+/* BlogForm.css */
+.formDiv {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #d7eaff; /* Blue border for the card */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #007bff;
+    font-weight: bold;
+    text-align: center; /* Center the h2 */
+    margin-bottom: 1rem; /* Add some margin below the heading for spacing */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.blog-form-label{
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.blog-form-control {
+    border-radius: 8px; /* Rounded corners for inputs */
+    border: 1px solid #e6f3ff; /* Blue border */
+    box-shadow: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-form-control:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Blue glow effect */
+}
+
+button {
+    border-radius: 8px; /* Rounded corners for buttons */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    padding: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button.w-100 {
+    width: 100%;
+}
+
+button.mt-3 {
+    margin-top: 1rem;
+}
+
+/* Button color */
+button.btn-toggle, button.btn-save {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px;
+}
+
+button.btn-toggle.success {
+    background-color: #28a745;
+    border: 1px solid #28a745;
+}
+
+button.btn-toggle.success:hover {
+    background-color: #218838;
+}
+
+button.btn-toggle.danger {
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+button.btn-toggle.danger:hover {
+    background-color: #c82333;
+}

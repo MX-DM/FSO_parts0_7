@@ -15,7 +15,7 @@ import usersService from './services/users'
 import { createBlog, inializeBlogs, deleteBlog, updateBlog, commentBlog } from './reducers/blogReducer'
 import { setUser, loginUser } from './reducers/userReducer'
 import { Routes, Route, useMatch } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
+import { Container, Alert } from 'react-bootstrap'
 
 
 const App = () => {
@@ -29,12 +29,12 @@ const App = () => {
     if (user === null) {
         currentUser = 0
     }
-    else{
+    else {
         currentUser = user.id
     }
     useEffect(() => {
         dispatch(inializeBlogs())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -44,7 +44,7 @@ const App = () => {
             dispatch(setUser(user))
             blogService.setToken(user.token)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -60,23 +60,23 @@ const App = () => {
         try {
             dispatch(loginUser(userCredentials))
             if (user) {
-                dispatch(notify(`Welcome ${user.name}` ,'s', 5))
+                dispatch(notify(`Welcome ${user.name}`, 's', 5))
             }
         }
         catch (error) {
             console.log(error)
-            dispatch(notify('Wrong credentials','e', 5))
+            dispatch(notify('Wrong credentials', 'e', 5))
         }
 
     }
 
     const addBlog = async (newBlog) => {
         try {
-            blogFormRef.current.toggleVisibility()
             dispatch(createBlog(newBlog))
             dispatch(notify(`Added the blog: ${newBlog.title} successfully`, 's', 5))
         }
         catch (error) {
+            console.error(error)
             dispatch(notify('Every field must be given', 'e', 5))
         }
     }
@@ -93,7 +93,7 @@ const App = () => {
     const updateComments = async (blog, comment) => {
         try {
             dispatch(commentBlog(blog, comment))
-        } catch(error) {
+        } catch (error) {
             console.log(error)
             dispatch(notify('Error adding comment', 'e', 5))
         }
@@ -130,38 +130,35 @@ const App = () => {
 
     return (
         <Container fluid>
-            <NavBar user={user} handleLogin={handleLogin} logOut={logOut}/>
-            <Notification/>
+            <NavBar user={user} handleLogin={handleLogin} logOut={logOut} />
+            <Notification />
             <Routes>
                 <Route path="/" element={
                     <>
                         <HomePage />
                     </>
-                }/>
-                <Route path="/users" element={<Users users={users}/>}/>
-                <Route path="/users/:id" element={<User user={userView}/>}/>
-                <Route path="/blogs/:id" element={<BlogView blog={blogView} updateLikes={updateLikes} updateComments={updateComments}/>}/>
+                } />
+                <Route path="/users" element={<Users users={users} />} />
+                <Route path="/users/:id" element={<User user={userView} />} />
+                <Route path="/blogs/:id" element={<BlogView blog={blogView} updateLikes={updateLikes} updateComments={updateComments} />} />
                 <Route path="/blogs" element={
-                    <>
-                        {user !== null
-                            ? (
-                                <Togglable buttonLabel='Create new blog' ref={blogFormRef}>
-                                    <BlogForm
-                                        createBlog={addBlog}
-                                    />
-                                </Togglable>
-
-                            ) : (
-                                <h3 style={{ margin: '20px' }}>Must be logged-in to create new blogs!</h3>
-                            )}
+                    <Container className="my-4">
+                        <h2 className='blogs-title'>Blogs</h2>
+                        {user !== null ? (
+                            <BlogForm createBlog={addBlog} />
+                        ) : (
+                            <Alert variant="info" className="text-center stylish-alert">
+                                Must be logged in to create new blogs!
+                            </Alert>
+                        )}
                         <Blogs
                             blogs={[...blogs].sort((a, b) => b.likes - a.likes)}
                             deleteBlog={handleDeleteBlog}
                             updateLikes={updateLikes}
                             currentUser={currentUser}
                         />
-                    </>
-                }/>
+                    </Container>
+                } />
             </Routes>
         </Container>
     )

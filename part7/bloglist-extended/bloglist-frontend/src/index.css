@@ -76,6 +76,14 @@ body {
   background-color: #222;
   color: white;
   box-shadow: none;
+  font-size: 0.85rem;
+}
+
+.dropdown-login-form .form-control {
+  background-color: #222;
+  color: white;
+  box-shadow: none;
+  font-size: 0.85rem;
 }
 
 .title {
@@ -101,4 +109,122 @@ body {
 
 .custom-nav-hamburger-title {
   color: #0b89dc;
+}
+
+.card {
+  border: 1px solid #d7eaff; /* Blue border for the card */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f8f9fa; /* Light background */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Darker shadow on hover */
+  border-color: #2599ff; /* Darker blue border on hover */
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.4rem;
+  color: #007bff; /* Blue color for title */
+}
+
+.card-subtitle {
+  font-size: 1rem;
+  color: #6c757d; /* Muted color for author */
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #333; /* Dark color for text */
+}
+
+button {
+  border-radius: 4px; /* Rounded corners for buttons */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.7); /* Blue glow effect on focus */
+}
+
+/* Button styles */
+button:active {
+  transform: scale(0.98); /* Subtle scale effect when clicked */
+}
+
+button.ms-2 {
+  margin-left: 8px;
+}
+
+button.me-2 {
+  margin-right: 8px;
+}
+
+button.outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+button.outline-primary:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+button.outline-success {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+button.outline-success:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+button.outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+button.outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+}
+
+button.outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+button.outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.blogs-title {
+  color: #007bff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 4.5em;
+}
+
+.stylish-alert {
+  margin-top: 2em;
+  font-weight: 500;
+  font-size: 1.1rem;
+  background-color: #e0f3ff;
+  color: #0c5460;
+  border: 1px solid #b8daff;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
 }

@@ -1,56 +1,68 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Card, Button } from 'react-bootstrap';
 
 const Blog = ({ blog, updateLikes, deleteBlog, currentUser }) => {
-    const [details, setDetails] = useState(false)
-    const toggleDetails = () => setDetails(!details)
+    const [details, setDetails] = useState(false);
+    const toggleDetails = () => setDetails(!details);
 
-    const hideWhenVisible = { display: details ? 'none' : '' }
-    const showWhenVisible = { display: details ? '' : 'none' }
-
-    const blogStyle = {
-        paddingTop: 10,
-        paddingLeft: 2,
-        border: 'solid',
-        borderWidth: 1,
-        marginBottom: 5
-    }
-
-    const pStyle = {
-        color: 'green',
-        fontSize: 16,
-        margin: 3
-    }
     return (
-        <div className='blog' style={blogStyle}>
-            <div style={hideWhenVisible} className='blog-summary'>
-                <p style={pStyle}>
-                    <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
-                    <button onClick={toggleDetails}>View</button>
-                </p>
-            </div>
-            <div style={showWhenVisible} className='blog-details'>
-                <p style={pStyle}>
-                    <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
-                    <button onClick={toggleDetails}>Hide</button>
-                </p>
-                <p style={pStyle} data-testid='blog-url'>{blog.url}</p>
-                {currentUser !== 0 ? (
-                    <p style={pStyle} data-testid='blog-likes' >Likes: {blog.likes}
-                        <button id='like-button' onClick={updateLikes}>Like</button>
-                    </p>
-                ) : (
-                    <p style={pStyle} data-testid='blog-likes' >Likes: {blog.likes} </p>
-                )}
-                {currentUser === blog.user ? (
-                    <button id='delete-button' onClick={deleteBlog}>Delete</button>
-                ):(
-                    <></>
-                )}
-            </div>
-        </div>
-    )
+        <Card className="mb-3 shadow-sm">
+            <Card.Body>
+                <Card.Title>
+                    <Link to={`/blogs/${blog.id}`} className="text-decoration-none text-dark fw-bold">
+                        {blog.title}
+                    </Link>
+                </Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">{blog.author}</Card.Subtitle>
 
-}
+                {!details && (
+                    <Button variant="outline-primary" size="sm" onClick={toggleDetails}>
+                        View
+                    </Button>
+                )}
 
-export default Blog
+                {details && (
+                    <>
+                        <Card.Text className="mt-2" data-testid="blog-url">
+                            {blog.url}
+                        </Card.Text>
+
+                        <Card.Text data-testid="blog-likes">
+                            Likes: {blog.likes}
+                            {currentUser !== 0 && (
+                                <Button
+                                    variant="outline-success"
+                                    size="sm"
+                                    className="ms-2"
+                                    id="like-button"
+                                    onClick={updateLikes}
+                                >
+                                    Like
+                                </Button>
+                            )}
+                        </Card.Text>
+
+                        <Button variant="outline-secondary" size="sm" onClick={toggleDetails} className='me-2'>
+                            Hide
+                        </Button>
+
+                        {currentUser === blog.user && (
+                            <Button
+                                variant="outline-danger"
+                                size="sm"
+                                id="delete-button"
+                                onClick={deleteBlog}
+                                className="me-2"
+                            >
+                                Delete
+                            </Button>
+                        )}
+                    </>
+                )}
+            </Card.Body>
+        </Card>
+    );
+};
+
+export default Blog;
