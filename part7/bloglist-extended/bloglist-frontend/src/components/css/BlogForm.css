@@ -1,13 +1,13 @@
 /* BlogForm.css */
 .formDiv {
-    background-color: #f9f9f9;
+    background-color: #f8f9fa;
     border-radius: 8px;
     padding: 20px;
-    border: 1px solid #d7eaff; /* Blue border for the card */
+    border: 1px solid #f2f8ff; /* Blue border for the card */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.blog-form-h2 {
     color: #007bff;
     font-weight: bold;
     text-align: center; /* Center the h2 */

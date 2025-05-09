@@ -23,7 +23,7 @@ const BlogForm = ({ createBlog }) => {
 
     return (
         <Container className="my-5 formDiv">
-            <h2>Create New Blog</h2>
+            <h2 className='blog-form-h2'>Create New Blog</h2>
             {isOpen && (
                 <Form onSubmit={addBlog}>
                     <Form.Group controlId="formTitle" className='mb-3'>

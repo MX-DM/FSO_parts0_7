@@ -7,59 +7,62 @@ const Blog = ({ blog, updateLikes, deleteBlog, currentUser }) => {
     const toggleDetails = () => setDetails(!details);
 
     return (
-        <Card className="mb-3 shadow-sm">
-            <Card.Body>
+        <Card className={`shadow-sm border-0 blog-card ${details ? 'expanded' : ''}`}>
+            <Card.Body className="d-flex flex-column">
                 <Card.Title>
-                    <Link to={`/blogs/${blog.id}`} className="text-decoration-none text-dark fw-bold">
+                    <Link to={`/blogs/${blog.id}`} className="text-decoration-none text-primary fw-semibold fs-5">
                         {blog.title}
                     </Link>
                 </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">{blog.author}</Card.Subtitle>
+                <Card.Subtitle className="mb-3 text-muted small">{blog.author}</Card.Subtitle>
 
                 {!details && (
-                    <Button variant="outline-primary" size="sm" onClick={toggleDetails}>
+                    <Button variant="primary" size="sm" onClick={toggleDetails} className="mt-auto">
                         View
                     </Button>
                 )}
 
-                {details && (
-                    <>
-                        <Card.Text className="mt-2" data-testid="blog-url">
-                            {blog.url}
-                        </Card.Text>
+                <div className={`blog-details-wrapper ${details ? 'expanded' : 'collapsed'}`}>
+                    {details && (
+                        <>
+                            <Card.Text className="mt-2 small text-break" data-testid="blog-url">
+                                🌐URL: {blog.url}
+                            </Card.Text>
 
-                        <Card.Text data-testid="blog-likes">
-                            Likes: {blog.likes}
-                            {currentUser !== 0 && (
-                                <Button
-                                    variant="outline-success"
-                                    size="sm"
-                                    className="ms-2"
-                                    id="like-button"
-                                    onClick={updateLikes}
-                                >
-                                    Like
+                            <Card.Text data-testid="blog-likes" className="d-flex align-items-center small">
+                                👍 Likes: {blog.likes}
+                                {currentUser !== 0 && (
+                                    <Button
+                                        variant="outline-success"
+                                        size="sm"
+                                        className="ms-2"
+                                        id="like-button"
+                                        onClick={updateLikes}
+                                    >
+                                        Like
+                                    </Button>
+                                )}
+                            </Card.Text>
+
+                            <div className="mt-auto">
+                                <Button variant="outline-secondary" size="sm" onClick={toggleDetails} className="me-2">
+                                    Hide
                                 </Button>
-                            )}
-                        </Card.Text>
 
-                        <Button variant="outline-secondary" size="sm" onClick={toggleDetails} className='me-2'>
-                            Hide
-                        </Button>
-
-                        {currentUser === blog.user && (
-                            <Button
-                                variant="outline-danger"
-                                size="sm"
-                                id="delete-button"
-                                onClick={deleteBlog}
-                                className="me-2"
-                            >
-                                Delete
-                            </Button>
-                        )}
-                    </>
-                )}
+                                {currentUser === blog.user && (
+                                    <Button
+                                        variant="outline-danger"
+                                        size="sm"
+                                        id="delete-button"
+                                        onClick={deleteBlog}
+                                    >
+                                        Delete
+                                    </Button>
+                                )}
+                            </div>
+                        </>
+                    )}
+                </div>
             </Card.Body>
         </Card>
     );
